@@ -2,9 +2,18 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { assets } from '../assets/assets'
 import { MenuIcon, SearchIcon, XIcon } from 'lucide-react'
+import { useClerk, UserButton, useUser } from '@clerk/clerk-react'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
+
+  const { user } = useUser()
+  const { openSignIn } = useClerk()
+
+  const handleCloseMenu = () => {
+    window.scrollTo(0, 0)
+    setIsOpen(false)
+  }
 
   return (
     <div className='fixed top-0 left-0 z-50 w-full flex items-center justify-between px-6 md:px-16 lg:px-36 py-5'>
@@ -30,26 +39,36 @@ const Navbar = () => {
       >
 
         <XIcon
-          onClick={() => setIsOpen(false)}
+          onClick={() => setIsOpen(prev => !prev)}
+          aria-label="Close Menu"
           className='md:hidden absolute top-6 right-6 w-6 h-6 cursor-pointer'
         />
 
-        <Link onClick={() => setIsOpen(false)} to='/'>Home</Link>
-        <Link onClick={() => setIsOpen(false)} to='/movies'>Movies</Link>
-        <Link onClick={() => setIsOpen(false)} to='/'>Theaters</Link>
-        <Link onClick={() => setIsOpen(false)} to='/'>Release</Link>
-        <Link onClick={() => setIsOpen(false)} to='/favorite'>Favorites</Link>
+        <Link onClick={handleCloseMenu} to='/'>Home</Link>
+        <Link onClick={handleCloseMenu} to='/movies'>Movies</Link>
+        <Link onClick={handleCloseMenu} to='/'>Theaters</Link>
+        <Link onClick={handleCloseMenu} to='/'>Release</Link>
+        <Link onClick={handleCloseMenu} to='/favorite'>Favorites</Link>
       </div>
 
       <div className='flex items-center gap-8'>
         <SearchIcon className='max-md:hidden w-6 h-6 cursor-pointer' />
-        <button className='px-4 py-1 sm:px-7 sm:py-2 bg-primary hover:bg-primary-dull transition rounded-full font-medium cursor-pointer'>
-          Login
-        </button>
+
+        {!user ? (
+          <button
+            onClick={openSignIn}
+            className='px-4 py-1 sm:px-7 sm:py-2 bg-primary hover:bg-primary-dull transition rounded-full font-medium cursor-pointer'
+          >
+            Login
+          </button>
+        ) : (
+          <UserButton />
+        )}
       </div>
 
       <MenuIcon
-        onClick={() => setIsOpen(true)}
+        onClick={() => setIsOpen(prev => !prev)}
+        aria-label="Open Menu"
         className='max-md:ml-4 md:hidden w-8 h-8 cursor-pointer'
       />
     </div>
