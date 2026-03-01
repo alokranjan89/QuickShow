@@ -3,7 +3,7 @@ import { assets } from '../assets/assets'
 import { ArrowRight, CalendarIcon, ClockIcon } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 
-const Hero = () => {
+const HeroSection = () => {
     const navigate = useNavigate()
 
     return (
@@ -18,17 +18,25 @@ const Hero = () => {
                 <span>Action | Adventure | Sci-Fi</span>
 
                 <div className='flex items-center gap-1'>
-                    <CalendarIcon className='w-4.5 h-4.5' />
+                    <CalendarIcon className='w-4 h-4' />
                     2018
                 </div>
 
                 <div className='flex items-center gap-1'>
-                    <ClockIcon className='w-4.5 h-4.5' />
+                    <ClockIcon className='w-4 h-4' />
                     2h 8m
                 </div>
             </div>
-            <p className='max-w-md text-gray-300' >In a post-apocalyptic world where cities ride on wheels and consume each other to survive, two people meet in London and try to stop a conspiracy.</p>
-            <button onClick={() => navigate('/Movies')} className='flex items-center gap-1 px-6 py-3 text-sm bg-primary hover:bg-primary-dull transition rounded-full font-medium cursor-pointer'>
+
+            <p className='max-w-md text-gray-300'>
+                In a post-apocalyptic world where cities ride on wheels and consume each other to survive,
+                two people meet in London and try to stop a conspiracy.
+            </p>
+
+            <button
+                onClick={() => navigate('/movies')}
+                className='flex items-center gap-1 px-6 py-3 text-sm bg-primary hover:bg-primary-dull transition rounded-full font-medium cursor-pointer'
+            >
                 Explore Movies
                 <ArrowRight className="w-5 h-5" />
             </button>
@@ -36,4 +44,4 @@ const Hero = () => {
     )
 }
 
-export default Hero
+export default HeroSection
